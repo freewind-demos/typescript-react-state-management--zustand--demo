@@ -4,8 +4,8 @@ import {useStore} from './store';
 type Props = {}
 
 export const Inner: FC<Props> = ({}) => {
-  const [count, update] = useStore(store => [store.message, store.update])
+  const [count, updateStore] = useStore(store => [store.message, store.updateStore])
   return <div>
-    <input value={count} onChange={(event) => update({message: event.target.value})}/>
+    <input value={count} onChange={(event) => updateStore({message: event.target.value})}/>
   </div>;
 }

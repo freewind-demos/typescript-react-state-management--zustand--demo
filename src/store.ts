@@ -2,10 +2,14 @@ import create from 'zustand'
 
 export type Store = {
   message: string;
-  update: (newState: Partial<Store>) => void;
+  updateStore: (newState: Partial<Store> | ((store: Store) => Partial<Store>)) => void;
 }
 
 export const useStore = create<Store>(set => ({
   message: 'aaa',
-  update: (newState: Partial<Store>) => set((store) => ({...store, ...newState}))
+  updateStore: (newStateOrFn: Partial<Store> | ((store: Store) => Partial<Store>)) =>
+    set((store) => {
+      const newState = typeof newStateOrFn === 'function' ? newStateOrFn(store) : newStateOrFn;
+      return ({...store, ...newState})
+    })
 }))
